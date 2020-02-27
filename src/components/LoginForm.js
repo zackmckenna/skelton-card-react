@@ -1,25 +1,35 @@
 import React, { useState } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import loginService from '../services/login'
+import { connect } from 'react-redux'
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const handleUsernameChange = event => {
     setUsername(event.target.value)
-    console.log(username)
   }
 
   const handlePasswordChange = event => {
     setPassword(event.target.value)
-    console.log(password)
   }
 
-  const handleLoginClick = event => {
+  const handleLoginClick = async event => {
     event.preventDefault()
-    console.log('logging in with', username, password)
-    loginService.login(username, password)
+    try {
+      const user = await loginService.login({
+        username, password
+      })
+      window.localStorage.setItem(
+        'loggedUser', JSON.stringify(user)
+      )
+      props.setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch {
+      console.log('error')
+    }
   }
 
   return (
