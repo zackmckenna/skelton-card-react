@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import LoginForm from './components/LoginForm';
+import NavbarTop from './components/TopNavbar';
+import userService from './services/user'
 
-function App() {
+ const App = () => {
+   const [users, setUsers] = useState(null)
+
+   useEffect(() => {
+     console.log(userService.getAll())
+     setUsers(userService.getAll())
+   }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
+        <NavbarTop />
+        <LoginForm />
     </div>
   );
 }
