@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import LoginForm from './components/LoginForm';
 import NavbarTop from './components/TopNavbar';
+import userService from './services/user'
 
-function App() {
+ const App = () => {
+   useEffect(() => {
+     console.log(userService.getAll())
+   })
+
   return (
     <div className="App">
         <NavbarTop />
-        <LoginForm />
+        <LoginForm />=
     </div>
   );
 }
