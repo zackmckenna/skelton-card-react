@@ -13,7 +13,7 @@ import userService from './services/user'
   return (
     <div className="App">
         <NavbarTop />
-        <LoginForm />=
+        <LoginForm />
     </div>
   );
 }
