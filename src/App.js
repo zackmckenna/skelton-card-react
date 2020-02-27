@@ -6,9 +6,12 @@ import NavbarTop from './components/TopNavbar';
 import userService from './services/user'
 
  const App = () => {
+   const [users, setUsers] = useState(null)
+
    useEffect(() => {
      console.log(userService.getAll())
-   })
+     setUsers(userService.getAll())
+   }, [])
 
   return (
     <div className="App">
