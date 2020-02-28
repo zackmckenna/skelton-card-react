@@ -6,14 +6,21 @@ import NavbarTop from './components/TopNavbar'
 import userService from './services/user'
 import { MDBBtn } from 'mdbreact'
 import { connect } from 'react-redux'
-import initUsers from './redux/ducks/user'
+import { initUsers } from './redux/ducks/user'
+import Home from './components/Home'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from  'react-router-dom'
 
-const App = () => {
+const App = (props) => {
   const [users, setUsers] = useState(null)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    initUsers()
+    props.initUsers()
     // userService
     //   .getAll()
     //   .then(users => {
@@ -33,8 +40,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <NavbarTop />
-      <LoginForm user={user} setUser={setUser} />
+      <Router>
+        <NavbarTop />
+        <LoginForm user={user} setUser={setUser} />
+
+        <Switch>
+          <Route path ='/' component={Home}/>
+        </Switch>
+      </Router>
     </div>
   )
 }
@@ -47,7 +60,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  initUsers
+  initUsers,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

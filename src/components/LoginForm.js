@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import loginService from '../services/login'
 import { connect } from 'react-redux'
+import { loginUser } from  '../redux/ducks/login'
 
 const LoginForm = (props) => {
   const [username, setUsername] = useState('')
@@ -15,16 +16,10 @@ const LoginForm = (props) => {
     setPassword(event.target.value)
   }
 
-  const handleLoginClick = async event => {
+  const handleLoginClick = event => {
     event.preventDefault()
     try {
-      const user = await loginService.login({
-        username, password
-      })
-      window.localStorage.setItem(
-        'loggedUser', JSON.stringify(user)
-      )
-      props.setUser(user)
+      props.loginUser(username, password)
       setUsername('')
       setPassword('')
     } catch {
@@ -53,4 +48,15 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+const mapDispatchToProps = {
+  loginUser,
+}
+
+const mapStateToProps = state => {
+  return {
+    users: state.users,
+    login: state.login
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

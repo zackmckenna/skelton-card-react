@@ -38,7 +38,7 @@ export const initUsersSuccess = users => {
 }
 
 export const initUsers = () => async dispatch => {
-  dispatch(initUsersPending)
+  dispatch(initUsersPending())
   try {
     await userService.getAll()
       .then(users => dispatch(initUsersSuccess(users)))
