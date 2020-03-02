@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import {
 MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
 MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBBtn
-} from "mdbreact";
-import { BrowserRouter as Router } from 'react-router-dom';
+} from 'mdbreact'
+
+import { HashRouter as Router } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LogoutButton from './buttons/LogoutButton'
 
@@ -24,10 +25,10 @@ const NavbarTop = () => {
         <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
           <MDBNavbarNav left>
             <MDBNavItem active>
-              <MDBNavLink to="#!">Home</MDBNavLink>
+              <MDBNavLink to='/'>Home</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="#!">Features</MDBNavLink>
+              <MDBNavLink to="/lobby">Lobby</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="#!">Pricing</MDBNavLink>

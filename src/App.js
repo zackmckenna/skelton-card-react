@@ -8,11 +8,16 @@ import { MDBBtn } from 'mdbreact'
 import { connect } from 'react-redux'
 import { initUsers } from './redux/ducks/user'
 import Home from './components/Home'
+import Lobby from './components/Lobby'
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect,
+  useHistory,
+  useLocation
 } from  'react-router-dom'
 
 const App = (props) => {
@@ -38,14 +43,18 @@ const App = (props) => {
     }
   }, [])
 
+
   return (
     <div className="App">
       <Router>
         <NavbarTop />
-        <LoginForm user={user} setUser={setUser} />
-
         <Switch>
-          <Route path ='/' component={Home}/>
+          <Route path ='/'>
+            <Home />
+          </Route>
+          <Route path ='/lobby'>
+            <Lobby />
+          </Route>
         </Switch>
       </Router>
     </div>

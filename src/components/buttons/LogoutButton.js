@@ -12,6 +12,7 @@ const LogoutButton = (props) => {
   const handleLogout = () => {
     props.logoutUser()
   }
+
   return (
     <MDBBtn onClick={() => handleLogout()}>
       Logout
