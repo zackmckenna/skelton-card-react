@@ -1,8 +1,8 @@
 import userService from '../../services/user'
 
-export const INIT_USERS_SUCCESS = 'bould/redux/login/INIT_USERS_SUCCESS'
-export const INIT_USERS_FAIL = 'bould/redux/login/INIT_USERS_FAIL'
-export const INIT_USERS_PENDING = 'bould/redux/login/INIT_USERS_PENDING'
+export const INIT_USERS_SUCCESS = 'skeleton-card/redux/ducks/login/INIT_USERS_SUCCESS'
+export const INIT_USERS_FAIL = 'skeleton-card/redux/ducks/login/INIT_USERS_FAIL'
+export const INIT_USERS_PENDING = 'skeleton-card/redux/ducks/login/INIT_USERS_PENDING'
 
 export default function reducer(state = { users: [] }, action) {
   switch (action.type) {

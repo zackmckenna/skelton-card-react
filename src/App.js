@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import axios from 'axios'
+
 import LoginForm from './components/LoginForm'
 import NavbarTop from './components/TopNavbar'
+import Home from './components/Home'
+import Lobby from './components/Lobby'
+
 import userService from './services/user'
+
 import { MDBBtn } from 'mdbreact'
 import { connect } from 'react-redux'
 import { initUsers } from './redux/ducks/user'
-import Home from './components/Home'
-import Lobby from './components/Lobby'
 
 import {
   BrowserRouter as Router,

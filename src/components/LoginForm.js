@@ -3,6 +3,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import loginService from '../services/login'
 import { connect } from 'react-redux'
 import { loginUser } from  '../redux/ducks/login'
+import { connectClient } from '../redux/ducks/socket'
 
 const LoginForm = (props) => {
   const [username, setUsername] = useState('')
@@ -22,6 +23,7 @@ const LoginForm = (props) => {
       props.loginUser(username, password)
       setUsername('')
       setPassword('')
+      props.connectClient()
     } catch {
       console.log('error')
     }
@@ -50,6 +52,7 @@ const LoginForm = (props) => {
 
 const mapDispatchToProps = {
   loginUser,
+  connectClient
 }
 
 const mapStateToProps = state => {

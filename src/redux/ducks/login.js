@@ -1,13 +1,13 @@
 import loginService from '../../services/login'
 
-export const LOGIN_AUTH_SET= 'bould/redux/login/LOGIN_AUTH_SET';
-export const LOGIN_AUTH_SUCCESS = 'bould/redux/login/LOGIN_AUTH_SUCCESS'
-export const LOGIN_AUTH_FAIL = 'bould/redux/login/LOGIN_AUTH_FAIL'
-export const LOGIN_AUTH_PENDING = 'bould/redux/login/LOGIN_AUTH_PENDING'
+export const LOGIN_AUTH_SET= 'skeleton-card/redux/ducks/login/LOGIN_AUTH_SET';
+export const LOGIN_AUTH_SUCCESS = 'skeleton-card/redux/ducks/login/LOGIN_AUTH_SUCCESS'
+export const LOGIN_AUTH_FAIL = 'skeleton-card/redux/ducks/login/LOGIN_AUTH_FAIL'
+export const LOGIN_AUTH_PENDING = 'skeleton-card/redux/ducks/login/LOGIN_AUTH_PENDING'
 
-export const LOGOUT_PENDING = 'bould/redux/login/LOGOUT_PENDING'
-export const LOGOUT_SUCCESS = 'bould/redux/login/LOGOUT_SUCCESS'
-export const LOGOUT_FAIL = 'bould/redux/login/LOGOUT_FAIL'
+export const LOGOUT_PENDING = 'skeleton-card/redux/ducks/login/LOGOUT_PENDING'
+export const LOGOUT_SUCCESS = 'skeleton-card/redux/ducks/login/LOGOUT_SUCCESS'
+export const LOGOUT_FAIL = 'skeleton-card/redux/ducks/login/LOGOUT_FAIL'
 
 export default function reducer(state = { user: [] }, action) {
   switch (action.type) {
