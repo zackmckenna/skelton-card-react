@@ -1,37 +1,42 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
 MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
-MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem
-} from "mdbreact";
-import { BrowserRouter as Router } from 'react-router-dom';
+MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBBtn
+} from 'mdbreact'
 
-class NavbarTop extends Component {
-state = {
-  isOpen: false
-};
+import { HashRouter as Router } from 'react-router-dom'
+import { connect } from 'react-redux'
+import LogoutButton from './buttons/LogoutButton'
 
-toggleCollapse = () => {
-  this.setState({ isOpen: !this.state.isOpen });
-}
+const NavbarTop = () => {
+  const [isOpen, setIsOpen] = useState(false)
 
-render() {
+  const toggleCollapse = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <Router>
       <MDBNavbar color="indigo" dark expand="md">
         <MDBNavbarBrand>
           <strong className="white-text">skeleton card</strong>
         </MDBNavbarBrand>
-        <MDBNavbarToggler onClick={this.toggleCollapse} />
-        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+        <MDBNavbarToggler onClick={() => toggleCollapse()} />
+        <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
           <MDBNavbarNav left>
             <MDBNavItem active>
-              <MDBNavLink to="#!">Home</MDBNavLink>
+              <MDBNavLink to='/'>Home</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="#!">Features</MDBNavLink>
+              <MDBNavLink to="/lobby">Lobby</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="#!">Pricing</MDBNavLink>
+            </MDBNavItem>
+            <MDBNavItem>
+            </MDBNavItem>
+            <MDBNavItem>
+              <LogoutButton/>
             </MDBNavItem>
             <MDBNavItem>
               <MDBDropdown>
@@ -53,8 +58,13 @@ render() {
         </MDBCollapse>
       </MDBNavbar>
     </Router>
-    );
+  )
+}
+
+const mapStateToProps = state => {
+  return {
+    login: state.login,
   }
 }
 
-export default NavbarTop;
+export default connect(mapStateToProps)(NavbarTop)
