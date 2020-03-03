@@ -1,4 +1,5 @@
 import loginService from '../../services/login'
+import { setSocketUser } from './socket'
 
 export const LOGIN_AUTH_SET= 'skeleton-card/redux/ducks/login/LOGIN_AUTH_SET';
 export const LOGIN_AUTH_SUCCESS = 'skeleton-card/redux/ducks/login/LOGIN_AUTH_SUCCESS'
@@ -83,6 +84,7 @@ export const loginUser = (username, password) => async dispatch => {
     username, password
   })
     .then(user => {
+      dispatch(setSocketUser(user))
       dispatch(loginAuthSuccess(user))
     })
     .catch(error => dispatch(loginAuthFail(error)))
