@@ -14,6 +14,8 @@ export const SET_SOCKET_STATE = 'skeleton-card/redux/ducks/socket/SET_SOCKET_STA
 export const SET_SOCKET_ROOM_STATE = 'skeleton-card/redux/ducks/socket/SET_SOCKET_ROOM_STATE'
 export const SET_AVAILABLE_ROOMS = 'skeleton-card/redux/ducks/socket/SET_AVAILABLE_ROOMS'
 
+export const SET_CLIENT_AS_HOST = 'skeleton-card/redux/ducks/socket/SET_CLIENT_AS_HOST'
+
 export const CONNECT_CLIENT_PENDING = 'skeleton-card/redux/ducks/socket/CONNECT_CLIENT_PENDING'
 export const CONNECT_CLIENT_SUCCESS = 'skeleton-card/redux/ducks/socket/CONNECT_CLIENT_SUCCESS'
 export const CONNECT_CLIENT_FAIL = 'skeleton-card/redux/ducks/socket/CONNECT_CLIENT_FAIL'

@@ -4,7 +4,7 @@ import LoginForm from './LoginForm'
 import CreateAccountForm from './CreateAccountForm'
 import { MDBBtn, MDBInput, MDBBtnGroup } from 'mdbreact'
 import { setRoomName, dispatchRoomMessage } from '../redux/ducks/socket'
-import { setGame } from '../redux/ducks/games'
+import { setGame } from '../redux/ducks/session'
 
 const Home = (props) => {
   const [lobbyName, setLobbyName] = useState('')
@@ -27,7 +27,8 @@ const Home = (props) => {
 
   const handleChangeGameClick = (event) => {
     setSelectedGame(event.target.value)
-    props.setGame(event.target.value)
+    const gameToSet = props.games.games.filter(game => game.gameName === event.target.value)[0]
+    props.setGame(gameToSet)
   }
 
   const startGame = (currentGame) => {
