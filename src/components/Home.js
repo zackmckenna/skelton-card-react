@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import LoginForm from './LoginForm'
 import CreateAccountForm from './CreateAccountForm'
-import { MDBBtn, MDBInput } from 'mdbreact'
+import { MDBBtn, MDBInput, MDBBtnGroup } from 'mdbreact'
 import { setRoomName, dispatchRoomMessage } from '../redux/ducks/socket'
+import { setGame } from '../redux/ducks/games'
 
 const Home = (props) => {
   const [lobbyName, setLobbyName] = useState('')
   const [createAccount, toggleCreateAccount] = useState(false)
   const [message, setMessage] = useState('')
+  const [selectedGame, setSelectedGame] = useState('Choose a game')
 
   const handleRoomNameChange = event => {
     setLobbyName(event.target.value)
@@ -23,6 +25,15 @@ const Home = (props) => {
     setMessage('')
   }
 
+  const handleChangeGameClick = (event) => {
+    setSelectedGame(event.target.value)
+    props.setGame(event.target.value)
+  }
+
+  const startGame = (currentGame) => {
+
+  }
+
   const handleCreateRoom = () => {
     props.setRoomName(lobbyName)
   }
@@ -30,8 +41,21 @@ const Home = (props) => {
     if(props.room) {
       return (
         <>
+          <h1>{selectedGame}</h1>
           <h2>Current Room: {props.room}</h2>
+          <MDBBtnGroup>
+            {props.games.games.map(game => {
+              return (
+                <MDBBtn
+                  onClick={(event) => handleChangeGameClick(event)}
+                  value={game.gameName}
+                  key={game.gameName}>{game.gameName}</MDBBtn>
+              )
+            })}
+          </MDBBtnGroup>
+          <MDBBtn onClick={() => startGame(props.games.selectedGame)}>Start Game</MDBBtn>
           <h2>Users</h2>
+          {props.games.selectedGame ? <h4>Must have at least {props.games.selectedGame.minPlayers} to play.</h4> : ''}
           {props.usersInRoom ? props.usersInRoom.map((client, index) => <p key={index}>{client.username}</p>) : null}
           <h2>send users message</h2>
           <MDBBtn onClick={() => handleSendMessage()}>Send Message To Room</MDBBtn><MDBInput value={message} onChange={event => handleMessageChange(event)} label="message" icon="lock" group type="email" validate />
@@ -73,13 +97,15 @@ const mapStateToProps = state => {
     users: state.users,
     room: state.socket.room,
     socket: state.socket,
-    usersInRoom: state.socket.currentClientsInRoom
+    usersInRoom: state.socket.currentClientsInRoom,
+    games: state.games
   }
 }
 
 const mapDispatchToProps = {
   setRoomName,
-  dispatchRoomMessage
+  dispatchRoomMessage,
+  setGame
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

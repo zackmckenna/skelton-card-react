@@ -7,6 +7,7 @@ import userReducer from './ducks/user'
 import loginReducer from './ducks/login'
 import accountReducer from './ducks/account'
 import socketReducer from './ducks/socket'
+import gameReducer from './ducks/games'
 
 let socket = io('http://localhost:3003')
 let socketIoMiddleware = createSocketIoMiddleware(socket, 'server/')
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   users: userReducer,
   login: loginReducer,
   account: accountReducer,
-  socket: socketReducer
+  socket: socketReducer,
+  games: gameReducer
 })
 
 const store = createStore(
