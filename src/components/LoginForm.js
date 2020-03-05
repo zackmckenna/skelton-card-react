@@ -23,7 +23,6 @@ const LoginForm = (props) => {
       props.loginUser(username, password)
       setUsername('')
       setPassword('')
-      props.connectClient()
     } catch {
       console.log('error')
     }

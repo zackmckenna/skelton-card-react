@@ -6,6 +6,7 @@ export const SET_ROOM_PENDING = 'skeleton-card/redux/ducks/socket/SET_ROOM_PENDI
 export const SET_ROOM_FAIL = 'skeleton-card/redux/ducks/socket/SET_ROOM_FAIL'
 export const SET_ROOM_STATE = 'skeleton-card/redux/ducks/socket/SET_ROOM_STATE'
 
+export const SET_CLIENTS_IN_ROOM = 'skeleton-card/redux/ducks/socket/SET_CLIENTS_IN_ROOM'
 export const SET_SOCKET_USER = 'skeleton-card/redux/ducks/socket/SET_USER_NAME'
 
 export const DISPERSE_ROOM_MESSAGE = 'skeleton-card/redux/ducks/socket/DISPERSE_ROOM_MESSAGE'
@@ -36,6 +37,8 @@ export default function reducer(state = { client: [], messages: [] }, action) {
   case SET_SOCKET_STATE:
     console.log('hit the reducer for set socket state')
     return { ...state, socket: { ...action.payload }  }
+  case SET_CLIENTS_IN_ROOM:
+    return { ...state, currentClientsInRoom: action.payload }
   case SET_SOCKET_ROOM_STATE:
     return { ...state, socket: { ...state.socket, socketRooms: action.payload } }
   case CONNECT_CLIENT_PENDING:
@@ -62,7 +65,7 @@ export const setRoomSuccess = () => {
 export const setSocketUser = user => {
   return {
     type: 'server/SET_SOCKET_USER',
-    payload: { username: user.username, id: user.id }
+    payload: { username: user.username, id: user.id, token: user.token ? true : false }
   }
 }
 export const setRoomPending = () => {

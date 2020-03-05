@@ -31,6 +31,8 @@ const Home = (props) => {
       return (
         <>
           <h2>Current Room: {props.room}</h2>
+          <h2>Users</h2>
+          {props.usersInRoom ? props.usersInRoom.map((client, index) => <p key={index}>{client.username}</p>) : null}
           <h2>send users message</h2>
           <MDBBtn onClick={() => handleSendMessage()}>Send Message To Room</MDBBtn><MDBInput value={message} onChange={event => handleMessageChange(event)} label="message" icon="lock" group type="email" validate />
           <h3>messages</h3>
@@ -44,7 +46,7 @@ const Home = (props) => {
           <MDBBtn onClick={() => handleCreateRoom()}>Create Room</MDBBtn><MDBInput value={lobbyName} onChange={event => handleRoomNameChange(event)} label="create a room" icon="lock" group type="email" validate />
           <h3>Join Lobby</h3>
           <h2>send users message</h2>
-          <MDBBtn onClick={() => handleSendMessage()}>Send Message To Room</MDBBtn><MDBInput value={message} onChange={event => handleMessageChange(event)} label="message" icon="lock" group type="email" validate />
+          <MDBBtn onClick={() => handleSendMessage()}>Send Message To Room</MDBBtn><MDBInput value={message} onChange={event => handleMessageChange(event)} label="type a message" icon="lock" group type="email" validate />
         </>
       )
     }
@@ -70,7 +72,8 @@ const mapStateToProps = state => {
     login: state.login,
     users: state.users,
     room: state.socket.room,
-    socket: state.socket
+    socket: state.socket,
+    usersInRoom: state.socket.currentClientsInRoom
   }
 }
 
