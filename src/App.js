@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import axios from 'axios'
-import LoginForm from './components/LoginForm'
-import NavbarTop from './components/TopNavbar'
-import userService from './services/user'
 import { MDBBtn } from 'mdbreact'
 import { connect } from 'react-redux'
-import { initUsers } from './redux/ducks/user'
-import Home from './components/Home'
-import Lobby from './components/Lobby'
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,12 +13,28 @@ import {
   useLocation
 } from  'react-router-dom'
 
+// component imports
+import LoginForm from './components/LoginForm'
+import NavbarTop from './components/TopNavbar'
+import Home from './components/Home'
+import Lobby from './components/Lobby'
+
+// api/service imports
+import userService from './services/user'
+
+// redux action imports
+import { initUsers } from './redux/ducks/user'
+import { initializeGames } from './redux/ducks/games'
+
+import { games } from './shared/games'
+
 const App = (props) => {
   const [users, setUsers] = useState(null)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     props.initUsers()
+    props.initializeGames(games)
     // userService
     //   .getAll()
     //   .then(users => {
@@ -70,6 +79,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   initUsers,
+  initializeGames
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

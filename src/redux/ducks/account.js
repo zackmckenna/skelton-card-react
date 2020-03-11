@@ -1,8 +1,8 @@
 import accountService from '../../services/account'
 
-export const CREATE_ACCOUNT_PENDING = 'bould/redux/login/CREATE_ACCOUNT_PENDING'
-export const CREATE_ACCOUNT_SUCCESS = 'bould/redux/login/CREATE_ACCOUNT_SUCCESS'
-export const CREATE_ACCOUNT_FAIL = 'bould/redux/login/CREATE_ACCOUNT_FAIL'
+export const CREATE_ACCOUNT_PENDING = 'skeleton-card/redux/ducks/account/CREATE_ACCOUNT_PENDING'
+export const CREATE_ACCOUNT_SUCCESS = 'skeleton-card/redux/ducks/account/CREATE_ACCOUNT_SUCCESS'
+export const CREATE_ACCOUNT_FAIL = 'skeleton-card/redux/ducks/account/CREATE_ACCOUNT_FAIL'
 
 export default function reducer(state = { user: [] }, action) {
   switch (action.type) {

@@ -7,8 +7,14 @@ import 'mdbreact/dist/css/mdb.css'
 import { Provider } from 'react-redux'
 import App from './App'
 import store from './redux/store'
-
 import * as serviceWorker from './serviceWorker'
+
+store.subscribe(() => {
+  console.log('new client state', store.getState())
+})
+
+store.dispatch({ type: 'server/hello', data: 'hello' })
+
 
 ReactDOM.render(
   <Provider store={store}>

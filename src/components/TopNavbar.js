@@ -7,6 +7,7 @@ MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBBtn
 import { HashRouter as Router } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LogoutButton from './buttons/LogoutButton'
+import LeaveRoomButton from './buttons/LeaveRoomButton'
 
 const NavbarTop = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -34,6 +35,7 @@ const NavbarTop = () => {
               <MDBNavLink to="#!">Pricing</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
+              <LeaveRoomButton/>
             </MDBNavItem>
             <MDBNavItem>
               <LogoutButton/>
