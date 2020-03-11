@@ -4,7 +4,7 @@ import LoginForm from './LoginForm'
 import CreateAccountForm from './CreateAccountForm'
 import { MDBBtn, MDBInput, MDBBtnGroup } from 'mdbreact'
 import { setRoomName } from '../redux/ducks/socket'
-import { setGame, dispatchRoomMessage } from '../redux/ducks/session'
+import { setGame, dispatchRoomMessage, startGame } from '../redux/ducks/session'
 
 const Home = (props) => {
   const [lobbyName, setLobbyName] = useState('')
@@ -31,12 +31,16 @@ const Home = (props) => {
     props.setGame(gameToSet, props.socket.room)
   }
 
-  const startGame = (currentGame) => {
-
+  const handleStartGameClick = () => {
+    if(selectedGame !== 'Choose a game'){
+      props.startGame(props.session)
+    }
+    console.log('no game selected')
   }
 
   const handleCreateRoom = () => {
     props.setRoomName(lobbyName)
+    setLobbyName('')
   }
   if (props.login.user && props.login.user.token) {
     if(props.room) {
@@ -55,10 +59,10 @@ const Home = (props) => {
               )
             })}
           </MDBBtnGroup>
-          <MDBBtn onClick={() => startGame(props.session.selectedGame)}>Start Game</MDBBtn>
+          <MDBBtn onClick={() => handleStartGameClick()}>Start Game</MDBBtn>
           <h2>Users</h2>
           {/* {props.session.selectedGame ? <h4>Must have at least {props.session.selectedGame.minPlayers} to play.</h4> : ''} */}
-          {props.usersInRoom ? props.usersInRoom.map((client, index) => <p key={index}>{client.username}</p>) : null}
+          {props.session.clients ? props.session.clients.map((client, index) => <p key={index}>{client.username}</p>) : null}
           <h2>send users message</h2>
           <MDBBtn onClick={() => handleSendMessage()}>Send Message To Room</MDBBtn><MDBInput value={message} onChange={event => handleMessageChange(event)} label="message" icon="lock" group type="email" validate />
           <h3>messages</h3>
@@ -108,7 +112,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   setRoomName,
   dispatchRoomMessage,
-  setGame
+  setGame,
+  startGame
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

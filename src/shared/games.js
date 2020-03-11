@@ -3,8 +3,9 @@ export const games = [
     gameName: 'seawitched',
     minPlayers: 4,
     maxPlayers: 10,
-    roleDistribution: {
-      4: {
+    roleDistribution: [
+      {
+        players: 4,
         lookout: 1,
         mutineer: 1,
         mate: 1,
@@ -12,7 +13,8 @@ export const games = [
         good: 1,
         evil: 1
       },
-      5: {
+      {
+        players: 5,
         lookout: 1,
         mutineer: 1,
         mate: 1,
@@ -20,7 +22,8 @@ export const games = [
         good: 1,
         evil: 1
       },
-      6: {
+      {
+        players: 6,
         lookout: 1,
         mutineer: 1,
         mate: 2,
@@ -28,7 +31,8 @@ export const games = [
         good: 1,
         evil: 1
       },
-      7: {
+      {
+        players: 7,
         lookout: 1,
         mutineer: 1,
         mate: 3,
@@ -36,7 +40,8 @@ export const games = [
         good: 1,
         evil: 1
       },
-      8: {
+      {
+        players: 8,
         lookout: 1,
         mutineer: 2,
         mate: 3,
@@ -44,7 +49,8 @@ export const games = [
         good: 1,
         evil: 1
       },
-      9: {
+      {
+        players: 9,
         lookout: 1,
         mutineer: 2,
         mate: 3,
@@ -52,7 +58,8 @@ export const games = [
         good: 2,
         evil: 2
       },
-      10: {
+      {
+        players: 10,
         lookout: 1,
         mutineer: 2,
         mate: 4,
@@ -60,7 +67,7 @@ export const games = [
         good: 2,
         evil: 2
       }
-    }
+    ]
   },
   {
     gameName: 'traitor',

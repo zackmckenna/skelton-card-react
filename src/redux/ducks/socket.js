@@ -1,10 +1,16 @@
 import socketIoClient from 'socket.io-client'
+import { setRoomForSession, clearRoomForSession } from './session'
 let socket
 
 export const SET_ROOM_SUCCESS = 'skeleton-card/redux/ducks/socket/SET_ROOM_SUCCESS'
 export const SET_ROOM_PENDING = 'skeleton-card/redux/ducks/socket/SET_ROOM_PENDING'
 export const SET_ROOM_FAIL = 'skeleton-card/redux/ducks/socket/SET_ROOM_FAIL'
 export const SET_ROOM_STATE = 'skeleton-card/redux/ducks/socket/SET_ROOM_STATE'
+
+export const DISPATCH_LEAVE_ROOM_TO_SOCKET = 'server/DISPATCH_LEAVE_ROOM_TO_SOCKET'
+export const LEAVE_ROOM_FAIL = 'skeleton-card/redux/ducks/socket/LEAVE_ROOM_FAIL'
+export const LEAVE_ROOM_PENDING = 'skeleton-card/redux/ducks/socket/LEAVE_ROOM_PENDING'
+export const LEAVE_ROOM_SUCCESS = 'skeleton-card/redux/ducks/socket/LEAVE_ROOM_SUCCESS'
 
 export const SET_CLIENTS_IN_ROOM = 'skeleton-card/redux/ducks/socket/SET_CLIENTS_IN_ROOM'
 export const SET_SOCKET_USER = 'skeleton-card/redux/ducks/socket/SET_USER_NAME'
@@ -14,14 +20,14 @@ export const SET_SOCKET_STATE = 'skeleton-card/redux/ducks/socket/SET_SOCKET_STA
 export const SET_SOCKET_ROOM_STATE = 'skeleton-card/redux/ducks/socket/SET_SOCKET_ROOM_STATE'
 export const SET_AVAILABLE_ROOMS = 'skeleton-card/redux/ducks/socket/SET_AVAILABLE_ROOMS'
 
-export const SET_CLIENT_AS_HOST = 'skeleton-card/redux/ducks/socket/SET_CLIENT_AS_HOST'
-
 export const CONNECT_CLIENT_PENDING = 'skeleton-card/redux/ducks/socket/CONNECT_CLIENT_PENDING'
 export const CONNECT_CLIENT_SUCCESS = 'skeleton-card/redux/ducks/socket/CONNECT_CLIENT_SUCCESS'
 export const CONNECT_CLIENT_FAIL = 'skeleton-card/redux/ducks/socket/CONNECT_CLIENT_FAIL'
 
 export default function reducer(state = { client: [], messages: [] }, action) {
   switch (action.type) {
+  case LEAVE_ROOM_SUCCESS:
+    return { ...state, room: null, currentClientsInRoom: null, socket: action.payload }
   case SET_ROOM_PENDING:
     return { ...state, setRoomPending: true }
   case SET_ROOM_SUCCESS:
@@ -58,9 +64,45 @@ export default function reducer(state = { client: [], messages: [] }, action) {
   }
 }
 
+export const leaveRoomSuccess = socket => {
+  return {
+    type: LEAVE_ROOM_SUCCESS,
+    payload: socket
+  }
+}
+
+export const dispatchLeaveRoomToSocket = roomName => {
+  return {
+    type: DISPATCH_LEAVE_ROOM_TO_SOCKET,
+    payload: roomName
+  }
+}
+
+export const leaveRoom = roomName => dispatch => {
+  dispatch(leaveRoomPending())
+  try {
+    dispatch(dispatchLeaveRoomToSocket(roomName))
+    dispatch(clearRoomForSession())
+  } catch (error){
+    dispatch(leaveRoomFail(error))
+  }
+}
 export const setRoomSuccess = () => {
   return {
     type: SET_ROOM_SUCCESS
+  }
+}
+
+export const leaveRoomFail = error => {
+  return {
+    type: LEAVE_ROOM_FAIL,
+    payload: error
+  }
+}
+
+export const leaveRoomPending = () => {
+  return {
+    type: LEAVE_ROOM_PENDING,
   }
 }
 
@@ -160,6 +202,7 @@ export const setRoomName = roomName => dispatch => {
   // socket.emit('set room', roomName)
   dispatch(setRoomState(roomName))
   dispatch(dispatchRoomToSocket(roomName))
+  dispatch(setRoomForSession(roomName))
 }
 
 
