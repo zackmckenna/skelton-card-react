@@ -32,15 +32,12 @@ const NavbarTop = () => {
               <MDBNavLink to="/lobby">Lobby</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="#!">Pricing</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
               <LeaveRoomButton/>
             </MDBNavItem>
             <MDBNavItem>
               <LogoutButton/>
             </MDBNavItem>
-            <MDBNavItem>
+            {/* <MDBNavItem>
               <MDBDropdown>
                 <MDBDropdownToggle nav caret>
                   <span className="mr-2">Dropdown</span>
@@ -52,7 +49,7 @@ const NavbarTop = () => {
                   <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
-            </MDBNavItem>
+            </MDBNavItem> */}
           </MDBNavbarNav>
           <MDBNavbarNav right>
             {/* things to go right */}
