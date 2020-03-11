@@ -29,10 +29,10 @@ const LoginForm = (props) => {
   }
 
   return (
-  <MDBContainer>
-    <MDBRow>
-      <MDBCol md="4">
-        <form>
+  <MDBContainer style={{ marginTop: '5rem'}}>
+    <MDBRow style={{ textAlign: 'center', justifyContent: 'center' }}>
+      <MDBCol md="6">
+        <form >
           <p className="h5 text-center mb-4">Sign in</p>
           <div className="grey-text">
             <MDBInput value={username} onChange={event => handleUsernameChange(event)}label="Type your email" icon="envelope" group type="email" validate error="wrong"

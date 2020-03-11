@@ -89,8 +89,10 @@ const Home = (props) => {
   } else {
     return (
       <>
-        <LoginForm />
-        <MDBBtn onClick={() => toggleCreateAccount(!createAccount)}>create an account</MDBBtn>
+        <div style={{ textAlign: 'center', marginTop: '10px' }}>
+          <LoginForm />
+          <MDBBtn onClick={() => toggleCreateAccount(!createAccount)}>create an account</MDBBtn>
+        </div>
       </>
 
     )
