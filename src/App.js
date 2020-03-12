@@ -18,7 +18,7 @@ import LoginForm from './components/LoginForm'
 import NavbarTop from './components/TopNavbar'
 import Home from './components/Home'
 import RoomLobby from './components/RoomLobby'
-
+import GameScreen from './components/GameScreen'
 // api/service imports
 import userService from './services/user'
 
@@ -55,17 +55,18 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <Router>
-        <NavbarTop />
-        <Switch>
-          <Route path ='/'>
-            <Home />
-          </Route>
-          <Route path ='/lobby'>
-            <RoomLobby />
-          </Route>
-        </Switch>
-      </Router>
+      <NavbarTop />
+      <Switch>
+        <Route exact path ='/'>
+          <Home />
+        </Route>
+        <Route path ='/lobby'>
+          <RoomLobby />
+        </Route>
+        <Route path='/game'>
+          <GameScreen />
+        </Route>
+      </Switch>
     </div>
   )
 }
@@ -73,7 +74,8 @@ const App = (props) => {
 const mapStateToProps = state => {
   return {
     users: state.users,
-    login: state.login
+    login: state.login,
+    session: state.session
   }
 }
 

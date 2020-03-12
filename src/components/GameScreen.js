@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useHistory, Redirect } from 'react-router-dom'
-import LoginForm from './LoginForm'
 import SpinLoader from './utility/SpinLoader'
 import { MDBBtn, MDBInput, MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownItem, MDBDropdownMenu } from 'mdbreact'
 import { setRoomName } from '../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../redux/ducks/session'
 
-const RoomLobby = (props) => {
-  let history = useHistory()
+const GameScreen = (props) => {
   const [message, setMessage] = useState('')
   const [selectedGame, setSelectedGame] = useState('Choose a game')
 
@@ -33,45 +30,14 @@ const RoomLobby = (props) => {
 
   const getClientRole = (userId, clients) => clients.filter(client => client.userId === userId )[0]
 
-  const handleStartGameClick = () => {
-    if(selectedGame !== 'Choose a game'){
-      props.startGame(props.session)
-    }
-    console.log('no game selected')
-  }
-
   if (props.login.user && props.login.user.token) {
-    if(props.session.roleDistributed) {
-      console.log('roles distributed')
-      return <Redirect to='/game'/>
-    }
-
     if(props.room) {
       return (
         <>
-          <h1>{props.session.selectedGame ? props.session.selectedGame.gameName : 'Choose a game'}</h1>
-          <h2>Current Room: {props.room}</h2>
-          {props.session.host ? <p>You are the host</p> : null }
-          <MDBDropdown>
-            <MDBDropdownToggle caret color='primary'>
-              Select a game
-            </MDBDropdownToggle>
-            <MDBDropdownMenu>
-              {props.games.games.map(game => {
-                return (
-                  <MDBDropdownItem
-                    onClick={(event) => handleChangeGameClick(event)}
-                    value={game.gameName}
-                    key={game.gameName}>{game.gameName}</MDBDropdownItem>
-                )
-              })}
-            </MDBDropdownMenu>
-          </MDBDropdown>
-          <MDBBtn onClick={() => handleStartGameClick()}>Start Game</MDBBtn>
+          <h1>Role:{getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).role : null }</h1>
           <h2>Users</h2>
           {/* {props.session.selectedGame ? <h4>Must have at least {props.session.selectedGame.minPlayers} to play.</h4> : ''} */}
           {props.session.clients ? props.session.clients.map((client, index) => <p key={index}>{client.username}</p>) : null}
-          {getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).role : null }
           <h2>send users message</h2>
           <MDBBtn onClick={() => handleSendMessage()}>Send Message To Room</MDBBtn><MDBInput value={message} onChange={event => handleMessageChange(event)} label="message" icon="lock" group type="email" validate />
           <h3>messages</h3>
@@ -111,4 +77,4 @@ const mapDispatchToProps = {
   startGame
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomLobby)
+export default connect(mapStateToProps, mapDispatchToProps)(GameScreen)

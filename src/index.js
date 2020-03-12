@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import App from './App'
 import store from './redux/store'
 import * as serviceWorker from './serviceWorker'
+import { BrowserRouter } from 'react-router-dom'
 
 store.subscribe(() => {
   console.log('new client state', store.getState())
@@ -18,7 +19,9 @@ store.dispatch({ type: 'server/hello', data: 'hello' })
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter >
+      <App />
+    </BrowserRouter>
   </Provider>
   , document.getElementById('root'))
 
