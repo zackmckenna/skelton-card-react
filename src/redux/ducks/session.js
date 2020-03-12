@@ -17,6 +17,8 @@ export const SET_HOST = 'skeleton-card/redux/ducks/session/SET_HOST'
 export const SET_CLIENTS_IN_ROOM = 'skeleton-card/redux/ducks/session/SET_CLIENTS_IN_ROOM'
 export const SET_ROOM_FOR_SESSION = 'skeleton-card/redux/ducks/session/SET_ROOM_FOR_SESSION'
 export const CLEAR_ROOM_FOR_SESSION = 'skeleton-card/redux/ducks/session/CLEAR_ROOM_FOR_SESSION'
+export const SET_GAME_ROLES = 'skeleton-card/redux/ducks/session/SET_GAME_ROLES'
+
 export default function reducer(state = { messages: [], clients: [], host: false, selectedGame: null }, action) {
   switch (action.type) {
   case CLEAR_ROOM_FOR_SESSION:
@@ -25,7 +27,7 @@ export default function reducer(state = { messages: [], clients: [], host: false
     return {...state, room: action.payload }
   case REMOVE_CLIENT_FROM_ROOM:
     console.log('removing client')
-    return { ...state, clients: state.clients.filter(client => client.socketId !== action.payload)}
+    return { ...state, clients: state.clients.filter(client => client.socketId !== action.payload) }
   case SET_CLIENTS_IN_ROOM:
     return { ...state, clients: action.payload }
   case DISPATCH_GAME_TO_CLIENTS:
@@ -39,6 +41,8 @@ export default function reducer(state = { messages: [], clients: [], host: false
     return { ...state, selectedGame: action.payload }
   case SET_HOST:
     return { ...state, host: true }
+  case SET_GAME_ROLES:
+    return { ...state, roleDistributed: true, clients: action.payload }
   case START_GAME_SUCCESS:
     return { ...state, startGamePending: false }
   case START_GAME_FAIL:
@@ -47,6 +51,13 @@ export default function reducer(state = { messages: [], clients: [], host: false
     return { ...state, startGamePending: true }
   default:
     return state
+  }
+}
+
+export const setGameRoles = roles => {
+  return {
+    type: SET_GAME_ROLES,
+    payload: roles
   }
 }
 

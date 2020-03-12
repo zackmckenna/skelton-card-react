@@ -11,7 +11,13 @@ export const games = [
         mate: 1,
         captain: 1,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'lookout','mutineer','mate','captain'
+        ],
+        alignments: [
+          'good','evil'
+        ]
       },
       {
         players: 5,
@@ -20,7 +26,13 @@ export const games = [
         mate: 1,
         captain: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'lookout','mutineer','mate','captain','captain'
+        ],
+        alignments: [
+          'good', 'evil'
+        ]
       },
       {
         players: 6,
@@ -29,7 +41,13 @@ export const games = [
         mate: 2,
         captain: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'lookout','mutineer','mate','mate','captain','captain'
+        ],
+        alignments: [
+          'good', 'evil'
+        ]
       },
       {
         players: 7,
@@ -38,7 +56,10 @@ export const games = [
         mate: 3,
         captain: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'lookout','mutineer','mate','mate','mate','captain','captain'
+        ]
       },
       {
         players: 8,
@@ -47,7 +68,13 @@ export const games = [
         mate: 3,
         captain: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'lookout','mutineer','mutineer','mate','mate','mate','captain','captain'
+        ],
+        alignments: [
+          'good', 'evil'
+        ]
       },
       {
         players: 9,
@@ -56,7 +83,13 @@ export const games = [
         mate: 3,
         captain: 3,
         good: 2,
-        evil: 2
+        evil: 2,
+        deck: [
+          'lookout','mutineer','mutineer','mate','mate','mate','captain','captain','captain'
+        ],
+        alignments: [
+          'good','good','evil','evil'
+        ]
       },
       {
         players: 10,
@@ -65,7 +98,13 @@ export const games = [
         mate: 4,
         captain: 3,
         good: 2,
-        evil: 2
+        evil: 2,
+        deck: [
+          'lookout','mutineer','mutineer','mate','mate','mate','mate','captain','captain','captain'
+        ],
+        alignments: [
+          'good','good','evil','evil'
+        ]
       }
     ]
   },
@@ -159,5 +198,15 @@ export const games = [
         villager: 3,
       }
     }
+  },
+  {
+    gameName: 'spyfall',
+    minPlayers: 3,
+    maxPlayers: 12,
+    locations: [
+      'cemetary',
+      'racetrack',
+      'farm'
+    ]
   }
 ]

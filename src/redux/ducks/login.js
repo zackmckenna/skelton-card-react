@@ -21,7 +21,7 @@ export default function reducer(state = { user: [] }, action) {
   case LOGIN_AUTH_PENDING:
     return { ...state, loading: true }
   case LOGIN_AUTH_SUCCESS:
-    return { ...state, loading: false, user: action.payload }
+    return { ...state, error: null, loading: false, user: action.payload }
   case LOGIN_AUTH_FAIL:
     return {
       ...state,

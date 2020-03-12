@@ -17,7 +17,7 @@ import {
 import LoginForm from './components/LoginForm'
 import NavbarTop from './components/TopNavbar'
 import Home from './components/Home'
-import Lobby from './components/Lobby'
+import RoomLobby from './components/RoomLobby'
 
 // api/service imports
 import userService from './services/user'
@@ -33,7 +33,7 @@ const App = (props) => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    props.initUsers()
+    // props.initUsers()
     props.initializeGames(games)
     // userService
     //   .getAll()
@@ -62,7 +62,7 @@ const App = (props) => {
             <Home />
           </Route>
           <Route path ='/lobby'>
-            <Lobby />
+            <RoomLobby />
           </Route>
         </Switch>
       </Router>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import LoginForm from './LoginForm'
 import SpinLoader from './utility/SpinLoader'
 import CreateAccountForm from './CreateAccountForm'
@@ -8,16 +7,9 @@ import { MDBBtn, MDBInput, MDBBtnGroup } from 'mdbreact'
 import { setRoomName } from '../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../redux/ducks/session'
 
-const Home = (props) => {
-  let history = useHistory()
-  const [lobbyName, setLobbyName] = useState('')
-  const [createAccount, toggleCreateAccount] = useState(false)
+const RoomLobby = (props) => {
   const [message, setMessage] = useState('')
   const [selectedGame, setSelectedGame] = useState('Choose a game')
-
-  const handleRoomNameChange = event => {
-    setLobbyName(event.target.value)
-  }
 
   const handleMessageChange = event => {
     setMessage(event.target.value)
@@ -41,12 +33,6 @@ const Home = (props) => {
       props.startGame(props.session)
     }
     console.log('no game selected')
-  }
-
-  const handleCreateRoom = () => {
-    props.setRoomName(lobbyName)
-    setLobbyName('')
-    history.push('/lobby')
   }
 
   if (props.login.user && props.login.user.token) {
@@ -80,28 +66,13 @@ const Home = (props) => {
     } else if (!props.room){
       return (
         <>
-          <h1>Home page. User: {props.login.user.username} </h1>
-          <MDBBtn onClick={() => handleCreateRoom()}>Create/Join Room</MDBBtn><MDBInput value={lobbyName} onChange={event => handleRoomNameChange(event)} label="create/join a room" icon="lock" group type="email" validate />
+          <h1>ERROR CREATING ROOM</h1>
         </>
       )
     }
   } else if (props.login.loading) {
     return (
       <SpinLoader />
-    )
-  } else if(createAccount) {
-    return (
-      <CreateAccountForm
-        toggleCreateAccount={() => toggleCreateAccount(!createAccount)}
-        createAccount={createAccount}/>
-    )
-  } else {
-    return (
-      <>
-        <LoginForm />
-        <MDBBtn style={{ width: '13rem' }} onClick={() => toggleCreateAccount(!createAccount)}>create an account</MDBBtn>
-      </>
-
     )
   }
 }
@@ -125,4 +96,4 @@ const mapDispatchToProps = {
   startGame
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(RoomLobby)
