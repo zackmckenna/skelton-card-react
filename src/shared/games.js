@@ -228,6 +228,6 @@ export const games = [
       'cemetary',
       'racetrack',
       'farm'
-    ]
+    ],
   }
 ]
