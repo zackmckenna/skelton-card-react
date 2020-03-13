@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { MDBBtn } from 'mdbreact'
+import { Button } from 'react-bootstrap'
 import { logoutUser } from '../../redux/ducks/login'
 
 const mapDispatchToProps = {
@@ -14,9 +15,9 @@ const LogoutButton = (props) => {
   }
 
   return (
-    <MDBBtn onClick={() => handleLogout()}>
+    <Button onClick={() => handleLogout()}>
       Logout
-    </MDBBtn>
+    </Button>
   )
 }
 

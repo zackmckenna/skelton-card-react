@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import loginService from '../services/login'
 import { connect } from 'react-redux'
 import { loginUser } from  '../redux/ducks/login'
@@ -29,23 +29,30 @@ const LoginForm = (props) => {
   }
 
   return (
-  <MDBContainer style={{ marginTop: '5rem'}}>
-    <MDBRow style={{ textAlign: 'center', justifyContent: 'center' }}>
-      <MDBCol md="6">
-        <form >
-          <p className="h5 text-center mb-4">Sign in</p>
-          <div className="grey-text">
-            <MDBInput value={username} onChange={event => handleUsernameChange(event)}label="Type your email" group type="email" validate error="wrong"
-              success="right" />
-            <MDBInput value={password} onChange={event => handlePasswordChange(event)} label="Type your password" group type="password" validate />
-          </div>
-          <div className="text-center">
-            <MDBBtn style={{width: '13rem'}} onClick={event => handleLoginClick(event)}>Login</MDBBtn>
-          </div>
-        </form>
-      </MDBCol>
-    </MDBRow>
-  </MDBContainer>
+    <Container>
+      <h1>Log In</h1>
+      <Row>
+        <Col>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control onChange={event => handleUsernameChange(event)} value={username} type="email" placeholder="Enter email" />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control onChange={event => handlePasswordChange(event)}  value={password} type="password" placeholder="Password" />
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+              <Form.Check type="checkbox" label="Remember Me" />
+            </Form.Group>
+            <Button onClick={event => handleLoginClick(event)} variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

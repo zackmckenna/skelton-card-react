@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+
 import { connect } from 'react-redux'
 import { createAccount } from  '../redux/ducks/account'
 
@@ -40,26 +42,41 @@ const CreateAccountForm = (props) => {
   }
 
   return (
-  <MDBContainer>
-    <MDBRow>
-      <MDBCol md="4">
-        <form>
-          <p className="h5 text-center mb-4">Sign in</p>
-          <div className="grey-text">
-            <MDBInput value={username} onChange={event => handleUsernameChange(event)}label="username" icon="envelope" group type="email" validate error="wrong"
-              success="right" />
-            <MDBInput value={name} onChange={event => handleNameChange(event)} label="name" icon="lock" group type="email" validate />
-            <MDBInput value={email} onChange={event => handleEmailChange(event)} label="email" icon="lock" group type="email" validate />
-            <MDBInput value={password} onChange={event => handlePasswordChange(event)} label="Type your password" icon="lock" group type="password" validate />
-          </div>
-          <div className="text-center">
-            <MDBBtn onClick={event => handleCreateAccountClick(event)}>Create Account</MDBBtn>
-            <MDBBtn onClick={() => props.toggleCreateAccount()}>cancel</MDBBtn>
-          </div>
-        </form>
-      </MDBCol>
-    </MDBRow>
-  </MDBContainer>
+    <Container>
+      <Row>
+        <Col>
+          <Form>
+            <Form.Group controlId='formBasicUsername'>
+              <Form.Label>username</Form.Label>
+              <Form.Control value={username} onChange={event => handleUsernameChange(event)} type='username' placeholder='enter desired username' />
+            </Form.Group>
+
+
+            <Form.Group controlId='formBasicUsername'>
+              <Form.Label>password</Form.Label>
+              <Form.Control value={password} onChange={event => handlePasswordChange(event)} type='password' placeholder='enter password' />
+            </Form.Group>
+
+            {/* <Form.Group controlId='formBasicUsername'>
+              <Form.Label>password</Form.Label>
+              <Form.Control value={password} onChange={event => handlePasswordChange(event)} type='password' placeholder='enter password' />
+            </Form.Group> */}
+
+            <Form.Group controlId='formBasicUsername'>
+              <Form.Label>email</Form.Label>
+              <Form.Control value={email} onChange={event => handleEmailChange(event)} type='email' placeholder='email' />
+            </Form.Group>
+
+            <Button onClick={event => handleCreateAccountClick(event)} variant="primary" type="submit">
+              Create Account
+            </Button>
+            <Button onClick={() => props.toggleCreateAccount()}>
+              Cancel
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

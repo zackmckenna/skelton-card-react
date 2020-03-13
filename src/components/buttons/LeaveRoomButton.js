@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { MDBBtn } from 'mdbreact'
+import { Button } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 import { leaveRoom } from '../../redux/ducks/socket'
 
 const mapDispatchToProps = {
@@ -13,6 +14,7 @@ const mapStateToProps = state => {
   }
 }
 
+
 const LeaveRoomButton = (props) => {
 
   const handleLeaveRoom = () => {
@@ -20,9 +22,9 @@ const LeaveRoomButton = (props) => {
   }
 
   return (
-    <MDBBtn onClick={() => handleLeaveRoom()}>
+    <Button onClick={() => handleLeaveRoom()}>
       Leave Room
-    </MDBBtn>
+    </Button>
   )
 }
 

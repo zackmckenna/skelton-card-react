@@ -55,6 +55,10 @@ const GameScreen = (props) => {
     return (
       <SpinLoader />
     )
+  } else {
+    return (
+      <h1>No game data</h1>
+    )
   }
 }
 

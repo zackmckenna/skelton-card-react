@@ -112,92 +112,113 @@ export const games = [
     gameName: 'traitor',
     minPlayers: 4,
     maxPlayers: 10,
-    roleDistribution: {
-      4: {
+    roleDistribution: [
+      {
+        players: 4,
         keyholder: 1,
         traitor: 1,
         guard: 1,
         wizard: 1,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'keyholder', 'traitor', 'guard', 'wizard'
+        ],
+        alignments: [
+          'good','evil'
+        ]
       },
-      5: {
+      {
+        players: 5,
         keyholder: 1,
         traitor: 1,
         guard: 1,
         wizard: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'keyholder', 'traitor', 'guard', 'wizard','wizard'
+        ],
+        alignments: [
+          'good','evil'
+        ]
       },
-      6: {
+      {
+        players: 6,
         keyholder: 1,
         traitor: 1,
         guard: 2,
         wizard: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'keyholder', 'traitor', 'guard','guard', 'wizard','wizard'
+        ],
+        alignments: [
+          'good','evil'
+        ]
       },
-      7: {
+      {
+        players: 7,
         keyholder: 1,
         traitor: 1,
         guard: 3,
         wizard: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'keyholder', 'traitor', 'guard','guard','guard', 'wizard','wizard'
+        ],
+        alignments: [
+          'good','evil'
+        ]
       },
-      8: {
+      {
+        players: 8,
         keyholder: 1,
         traitor: 2,
         guard: 3,
         wizard: 2,
         good: 1,
-        evil: 1
+        evil: 1,
+        deck: [
+          'keyholder', 'traitor', 'traitor', 'guard', 'guard','guard', 'wizard','wizard'
+        ],
+        alignments: [
+          'good','evil'
+        ]
       },
-      9: {
+      {
+        players: 9,
         keyholder: 1,
         traitor: 2,
         guard: 3,
         wizard: 3,
-        good: 2,
-        evil: 2
+        good: 1,
+        evil: 1,
+        deck: [
+          'keyholder', 'traitor', 'traitor', 'guard', 'guard','guard', 'wizard','wizard', 'wizard'
+        ],
+        alignments: [
+          'good', 'good', 'evil', 'evil'
+        ]
       },
-      10: {
+      {
+        players: 10,
         keyholder: 1,
         traitor: 2,
         guard: 4,
         wizard: 3,
-        good: 2,
-        evil: 2
+        good: 1,
+        evil: 1,
+        deck: [
+          'keyholder', 'traitor', 'traitor', 'guard', 'guard','guard', 'guard', 'wizard','wizard', 'wizard'
+        ],
+        alignments: [
+          'good', 'good', 'evil', 'evil'
+        ]
       }
-    }
-  },
-  {
-    gameName: 'werewolf',
-    minPlayers: 4,
-    maxPlayers: 10,
-    roleDistribution: {
-      3: {
-        werewolves: 2,
-        seer: 1,
-        robber: 1,
-        troublemaker: 1,
-        villager: 1,
-      },
-      4: {
-        werewolves: 2,
-        seer: 1,
-        robber: 1,
-        troublemaker: 1,
-        villager: 2,
-      },
-      5: {
-        werewolves: 2,
-        seer: 1,
-        robber: 1,
-        troublemaker: 1,
-        villager: 3,
-      }
-    }
+    ]
   },
   {
     gameName: 'spyfall',

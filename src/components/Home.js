@@ -5,6 +5,7 @@ import LoginForm from './LoginForm'
 import SpinLoader from './utility/SpinLoader'
 import CreateAccountForm from './CreateAccountForm'
 import { MDBBtn, MDBInput, MDBRow, MDBCol } from 'mdbreact'
+import { Button, Row, Col, Form, Jumbotron } from 'react-bootstrap'
 import { setRoomName } from '../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../redux/ducks/session'
 
@@ -58,22 +59,29 @@ const Home = (props) => {
     if (!props.room){
       return (
         <>
-          <MDBRow>
-            <MDBCol>
-              <h1>Welcome, {props.login.user.username} </h1>
-            </MDBCol>
-          </MDBRow>
-          <MDBRow>
-            <MDBCol>
-              <MDBBtn onClick={() => handleCreateRoom()}>Create/Join Room</MDBBtn>
-            </MDBCol>
-          </MDBRow>
-          <MDBRow style={{ textAlign: 'center' }}>
-            <MDBCol style={{ margin: 'auto' }} sm={6}>
-              <MDBInput value={lobbyName} onChange={event => handleRoomNameChange(event)} label="create/join a room" type="email" validate />
-            </MDBCol>
-          </MDBRow>
-          <p>Enter your desired room-name to create a new room, or enter an existing room-name to join one</p>
+        <Jumbotron>
+          <Row>
+            <Col>
+            <h1>Welcome, {props.login.user.username}</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Room Name</Form.Label>
+                  <Form.Text>
+                    Create a room by using a new name, or join an existing room by typing in a matching name
+                  </Form.Text>
+                  <Form.Control value={lobbyName} onChange={event => handleRoomNameChange(event)} type="email" placeholder="Enter email" />
+                </Form.Group>
+                <Button onClick={() => handleCreateRoom()} variant="primary" type="submit">
+                  Create/Join Room
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        </Jumbotron>
         </>
       )
     }
@@ -91,9 +99,8 @@ const Home = (props) => {
     return (
       <>
         <LoginForm />
-        <MDBBtn style={{ width: '13rem' }} onClick={() => toggleCreateAccount(!createAccount)}>create an account</MDBBtn>
+        <Button onClick={() => toggleCreateAccount(!createAccount)}variant="link">create an account</Button>
       </>
-
     )
   }
 }

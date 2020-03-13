@@ -1,61 +1,33 @@
 import React, { useState } from "react";
-import {
-MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
-MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBBtn
-} from 'mdbreact'
-
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import { HashRouter as Router } from 'react-router-dom'
 import { connect } from 'react-redux'
 import LogoutButton from './buttons/LogoutButton'
 import LeaveRoomButton from './buttons/LeaveRoomButton'
 
 const NavbarTop = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const toggleCollapse = () => {
-    setIsOpen(!isOpen)
-  }
 
   return (
     <Router>
-      <MDBNavbar color="indigo" dark expand="md">
-        <MDBNavbarBrand>
-          <strong className="white-text">skeleton card</strong>
-        </MDBNavbarBrand>
-        <MDBNavbarToggler onClick={() => toggleCollapse()} />
-        <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
-          <MDBNavbarNav left>
-            <MDBNavItem active>
-              <MDBNavLink to='/'>Home</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
-              <MDBNavLink to="/lobby">Lobby</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem>
-              <LeaveRoomButton/>
-            </MDBNavItem>
-            <MDBNavItem>
-              <LogoutButton/>
-            </MDBNavItem>
-            {/* <MDBNavItem>
-              <MDBDropdown>
-                <MDBDropdownToggle nav caret>
-                  <span className="mr-2">Dropdown</span>
-                </MDBDropdownToggle>
-                <MDBDropdownMenu>
-                  <MDBDropdownItem href="#!">Action</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                </MDBDropdownMenu>
-              </MDBDropdown>
-            </MDBNavItem> */}
-          </MDBNavbarNav>
-          <MDBNavbarNav right>
-            {/* things to go right */}
-          </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBNavbar>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="#home">skeleton card</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link to='/'>Home</Nav.Link>
+            <Nav.Link to='/lobby'>Lobby</Nav.Link>
+            <LeaveRoomButton />
+            <LogoutButton />
+            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </Router>
   )
 }

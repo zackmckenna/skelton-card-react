@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useHistory, Redirect } from 'react-router-dom'
 import LoginForm from './LoginForm'
+import GameSelect from './GameSelect'
 import SpinLoader from './utility/SpinLoader'
-import { MDBBtn, MDBInput, MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownItem, MDBDropdownMenu } from 'mdbreact'
+import { Form, Button, Row, Col, Container } from 'react-bootstrap'
 import { setRoomName } from '../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../redux/ducks/session'
+import uuid from 'uuid'
 
 const RoomLobby = (props) => {
   let history = useHistory()
@@ -26,6 +28,8 @@ const RoomLobby = (props) => {
   }
 
   const handleChangeGameClick = (event) => {
+    console.log(event.target.value)
+    event.preventDefault()
     setSelectedGame(event.target.value)
     const gameToSet = props.games.games.filter(game => game.gameName === event.target.value)[0]
     props.setGame(gameToSet, props.socket.room)
@@ -49,33 +53,66 @@ const RoomLobby = (props) => {
     if(props.room) {
       return (
         <>
-          <h1>{props.session.selectedGame ? props.session.selectedGame.gameName : 'Choose a game'}</h1>
-          <h2>Current Room: {props.room}</h2>
-          {props.session.host ? <p>You are the host</p> : null }
-          <MDBDropdown>
-            <MDBDropdownToggle caret color='primary'>
-              Select a game
-            </MDBDropdownToggle>
-            <MDBDropdownMenu>
-              {props.games.games.map(game => {
-                return (
-                  <MDBDropdownItem
-                    onClick={(event) => handleChangeGameClick(event)}
-                    value={game.gameName}
-                    key={game.gameName}>{game.gameName}</MDBDropdownItem>
-                )
-              })}
-            </MDBDropdownMenu>
-          </MDBDropdown>
-          <MDBBtn onClick={() => handleStartGameClick()}>Start Game</MDBBtn>
-          <h2>Users</h2>
-          {/* {props.session.selectedGame ? <h4>Must have at least {props.session.selectedGame.minPlayers} to play.</h4> : ''} */}
-          {props.session.clients ? props.session.clients.map((client, index) => <p key={index}>{client.username}</p>) : null}
-          {getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).role : null }
-          <h2>send users message</h2>
-          <MDBBtn onClick={() => handleSendMessage()}>Send Message To Room</MDBBtn><MDBInput value={message} onChange={event => handleMessageChange(event)} label="message" icon="lock" group type="email" validate />
-          <h3>messages</h3>
-          {props.session.messages ? props.session.messages.map((message, index) => message ? <p key={index}>{message.user}: {message.message}</p> : null) : null }
+          <Container>
+            <Row>
+              <Col>
+                <h1>{props.session.selectedGame ? props.session.selectedGame.gameName : 'Choose a game'}</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h2>Current Room: {props.room}</h2>
+                {props.session.host ? <p>You are the host</p> : null }
+              </Col>
+            </Row>
+            <GameSelect />
+            <Row>
+              <Col>
+                <h2>Users</h2>
+                {/* {props.session.selectedGame ? <h4>Must have at least {props.session.selectedGame.minPlayers} to play.</h4> : ''} */}
+                {props.session.clients ? props.session.clients.map((client, index) => <p key={index}>{client.username}</p>) : null}
+                {getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).role : null }
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form onChange={event => handleMessageChange(event)}>
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label>type a message</Form.Label>
+                    <Form.Control value={message} type="text" placeholder="type a message" />
+                    <Form.Text className="text-muted">
+                      send a message to the room
+                    </Form.Text>
+                  </Form.Group>
+                </Form>
+                <Button onClick={() => handleSendMessage()}>
+                  Send Message To Room
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h3>messages</h3>
+                <ul className='list-group' style={{ marginBottom: '5px', textAlign: 'left' }}>
+                {props.session.messages.length > 0 ? (
+                  props.session.messages.map(msg => (
+                    <Row>
+                      <Col>
+                        <li className='list-group-item' key={uuid()}>
+                          <p style={{ marginBottom: '0' }}><strong>{msg.user}: </strong>{msg.message}</p>
+                        </li>
+                      </Col>
+                    </Row>
+                  ))
+                ) : (
+                  <div className='text-center mt-5 pt-5'>
+                    <p className='lead text-center'>Fetching Messages</p>
+                  </div>
+                )}
+              </ul>
+              </Col>
+            </Row>
+          </Container>
         </>
       )
     } else if (!props.room){
@@ -88,6 +125,11 @@ const RoomLobby = (props) => {
   } else if (props.login.loading) {
     return (
       <SpinLoader />
+    )
+  } else {
+    return (
+      <Redirect to='/'/>
+      // <h1>no data</h1>
     )
   }
 }
