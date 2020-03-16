@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useHistory, Redirect } from 'react-router-dom'
-import LoginForm from './LoginForm'
-import GameSelect from './GameSelect'
-import SpinLoader from './utility/SpinLoader'
-import { Form, Button, Row, Col, Container } from 'react-bootstrap'
-import { setRoomName } from '../redux/ducks/socket'
-import { setGame, dispatchRoomMessage, startGame } from '../redux/ducks/session'
+import SpinLoader from '../utility/SpinLoader'
+import { MDBBtn, MDBInput, MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownItem, MDBDropdownMenu } from 'mdbreact'
+import { Button, Row, Col, Form } from 'react-bootstrap'
+import { setRoomName } from '../../redux/ducks/socket'
+import { setGame, dispatchRoomMessage, startGame } from '../../redux/ducks/session'
 import uuid from 'uuid'
 
-const RoomLobby = (props) => {
-  let history = useHistory()
+const SpyfallGameScreen = (props) => {
   const [message, setMessage] = useState('')
   const [selectedGame, setSelectedGame] = useState('Choose a game')
 
@@ -28,8 +25,6 @@ const RoomLobby = (props) => {
   }
 
   const handleChangeGameClick = (event) => {
-    console.log(event.target.value)
-    event.preventDefault()
     setSelectedGame(event.target.value)
     const gameToSet = props.games.games.filter(game => game.gameName === event.target.value)[0]
     props.setGame(gameToSet, props.socket.room)
@@ -37,54 +32,26 @@ const RoomLobby = (props) => {
 
   const getClientRole = (userId, clients) => clients.filter(client => client.userId === userId )[0]
 
-  const handleStartGameClick = () => {
-    if(selectedGame !== 'Choose a game'){
-      props.startGame(props.session)
-    }
-    console.log('no game selected')
-  }
-
   if (props.login.user && props.login.user.token) {
-    if(props.session.roleDistributed) {
-      console.log('roles distributed')
-      console.log('current game:', props.session.selectedGame.gameName)
-      switch(props.session.selectedGame.gameName){
-        case 'seawitched':
-          return <Redirect to='/game/seawitched'/>
-        case 'spyfall':
-          return <Redirect to='/game/spyfall'/>
-        case 'traitor':
-          return <Redirect to='/game/traitor'/>
-        default:
-          return <Redirect to='/game'/>
-      }
-    }
-
     if(props.room) {
       return (
         <>
-          <Container>
-            <Row>
-              <Col>
-                <h1>{props.session.selectedGame ? props.session.selectedGame.gameName : 'Choose a game'}</h1>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h2>Current Room: {props.room}</h2>
-                {props.session.host ? <p>You are the host</p> : null }
-              </Col>
-            </Row>
-            <GameSelect />
-            <Row>
-              <Col>
-                <h2>Users</h2>
-                {/* {props.session.selectedGame ? <h4>Must have at least {props.session.selectedGame.minPlayers} to play.</h4> : ''} */}
-                {props.session.clients ? props.session.clients.map((client, index) => <p key={index}>{client.username}</p>) : null}
-                {getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).role : null }
-              </Col>
-            </Row>
-            <Row>
+          <Row>
+            <Col>
+              <h1>Spyfall Role: {getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).isSpy ? 'spy' : `not-spy: ${getClientRole(props.login.user.id, props.session.clients).location}` : null }</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h2>Current Users</h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {props.session.clients ? props.session.clients.map((client, index) => <p key={index}>{client.username}</p>) : null}
+            </Col>
+          </Row>
+          <Row>
               <Col>
                 <Form onChange={event => handleMessageChange(event)}>
                   <Form.Group controlId="formBasicEmail">
@@ -122,7 +89,6 @@ const RoomLobby = (props) => {
               </ul>
               </Col>
             </Row>
-          </Container>
         </>
       )
     } else if (!props.room){
@@ -138,8 +104,7 @@ const RoomLobby = (props) => {
     )
   } else {
     return (
-      <Redirect to='/'/>
-      // <h1>no data</h1>
+      <h1>No game data</h1>
     )
   }
 }
@@ -163,4 +128,4 @@ const mapDispatchToProps = {
   startGame
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomLobby)
+export default connect(mapStateToProps, mapDispatchToProps)(SpyfallGameScreen)

@@ -27,6 +27,9 @@ import { initUsers } from './redux/ducks/user'
 import { initializeGames } from './redux/ducks/games'
 
 import { games } from './shared/games'
+import SpyfallGameScreen from './components/gameScreens/SpyfallGameScreen'
+import TraitorGameScreen from './components/gameScreens/TraitorGameScreen'
+import SeawitchedGameScreen from './components/gameScreens/SeawitchedGameScreen'
 
 const App = (props) => {
   const [users, setUsers] = useState(null)
@@ -62,6 +65,15 @@ const App = (props) => {
         </Route>
         <Route path ='/lobby'>
           <RoomLobby />
+        </Route>
+        <Route path='/game/spyfall'>
+          <SpyfallGameScreen />
+        </Route>
+        <Route path='/game/traitor'>
+          <TraitorGameScreen />
+        </Route>
+        <Route path='/game/seawitched'>
+          <SeawitchedGameScreen />
         </Route>
         <Route path='/game'>
           <GameScreen />
