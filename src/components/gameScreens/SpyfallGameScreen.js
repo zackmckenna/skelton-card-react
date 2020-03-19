@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import SpinLoader from '../utility/SpinLoader'
+import { Redirect } from 'react-router-dom'
 import { MDBBtn, MDBInput, MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownItem, MDBDropdownMenu } from 'mdbreact'
-import { Button, Row, Col, Form } from 'react-bootstrap'
+import { Button, Row, Col, Form, ListGroup, Container } from 'react-bootstrap'
 import { setRoomName } from '../../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../../redux/ducks/session'
 import uuid from 'uuid'
@@ -10,9 +11,17 @@ import uuid from 'uuid'
 const SpyfallGameScreen = (props) => {
   const [message, setMessage] = useState('')
   const [selectedGame, setSelectedGame] = useState('Choose a game')
+  const [isSpy, setIsSpy] = useState(false)
+  const [activeLocation, setActiveLocation] = useState('')
+  const [viewLocation, toggleViewLocation] = useState(false)
 
   useEffect(() => {
-    console.log('loading lobby')
+    if (props.login.user && props.session.selectedGame && props.session.selectedGame.gameName === 'spyfall'){
+      console.log('loading lobby')
+      setIsSpy(getClientRole(props.login.user.id, props.session.clients).isSpy)
+      setActiveLocation(getClientRole(props.login.user.id, props.session.clients).location)
+    }
+
   }, [])
 
   const handleMessageChange = event => {
@@ -22,6 +31,13 @@ const SpyfallGameScreen = (props) => {
   const handleSendMessage = () => {
     props.dispatchRoomMessage(props.room, message)
     setMessage('')
+  }
+
+  const returnToLobby = () => {
+
+    return(
+      <Redirect to='/lobby'/>
+    )
   }
 
   const handleChangeGameClick = (event) => {
@@ -34,21 +50,28 @@ const SpyfallGameScreen = (props) => {
 
   if (props.login.user && props.login.user.token) {
     if(props.room) {
-      return (
-        <>
+      if(isSpy) {
+        return (
+          <Container>
           <Row>
             <Col>
-              <h1>Spyfall Role: {getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).isSpy ? 'spy' : `not-spy: ${getClientRole(props.login.user.id, props.session.clients).location}` : null }</h1>
+              <h1>You are the SPY</h1>
             </Col>
           </Row>
           <Row>
             <Col>
-              <h2>Current Users</h2>
+              You must try to figure out the current location
             </Col>
           </Row>
           <Row>
             <Col>
-              {props.session.clients ? props.session.clients.map((client, index) => <p key={index}>{client.username}</p>) : null}
+              <ListGroup>
+                {props.session.selectedGame.locations.map(location => {
+                  return (
+                    <ListGroup.Item>{location}</ListGroup.Item>
+                  )
+                })}
+              </ListGroup>
             </Col>
           </Row>
           <Row>
@@ -89,7 +112,70 @@ const SpyfallGameScreen = (props) => {
               </ul>
               </Col>
             </Row>
-        </>
+          </Container>
+        )
+      } else if (!isSpy)
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <h1>You are not the Spy</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col className='mt-2'>
+              <Button onClick={() => toggleViewLocation(!viewLocation)}>
+                {viewLocation ? activeLocation : 'view location'}
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col className='mt-2'>
+              <ListGroup as='ul'>
+                {props.session.selectedGame.locations.map(location => <ListGroup.Item as='li'>{location}</ListGroup.Item>
+                )}
+              </ListGroup>
+            </Col>
+          </Row>
+          <Row>
+              <Col>
+                <Form onChange={event => handleMessageChange(event)}>
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label>type a message</Form.Label>
+                    <Form.Control value={message} type="text" placeholder="type a message" />
+                    <Form.Text className="text-muted">
+                      send a message to the room
+                    </Form.Text>
+                  </Form.Group>
+                </Form>
+                <Button onClick={() => handleSendMessage()}>
+                  Send Message To Room
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h3>messages</h3>
+                <ul className='list-group' style={{ marginBottom: '5px', textAlign: 'left' }}>
+                {props.session.messages.length > 0 ? (
+                  props.session.messages.map(msg => (
+                    <Row>
+                      <Col>
+                        <li className='list-group-item' key={uuid()}>
+                          <p style={{ marginBottom: '0' }}><strong>{msg.user}: </strong>{msg.message}</p>
+                        </li>
+                      </Col>
+                    </Row>
+                  ))
+                ) : (
+                  <div className='text-center mt-5 pt-5'>
+                    <p className='lead text-center'>Fetching Messages</p>
+                  </div>
+                )}
+              </ul>
+              </Col>
+            </Row>
+        </Container>
       )
     } else if (!props.room){
       return (
@@ -104,7 +190,7 @@ const SpyfallGameScreen = (props) => {
     )
   } else {
     return (
-      <h1>No game data</h1>
+      <Redirect to='/' />
     )
   }
 }

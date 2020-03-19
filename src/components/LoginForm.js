@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap'
 import loginService from '../services/login'
 import { connect } from 'react-redux'
 import { loginUser } from  '../redux/ducks/login'
@@ -28,8 +28,30 @@ const LoginForm = (props) => {
     }
   }
 
+  const loginTestUser = (username, password) => {
+    props.loginUser(username, password)
+  }
+
   return (
     <Container>
+      <Row className='text-center'>
+        <Col className='mt-2'>
+            <ButtonGroup>
+              <Button variant='success' className='success' onClick={() => loginTestUser('test1','test1')}>
+                Login test1
+              </Button>
+              <Button variant='danger' onClick={() => loginTestUser('test2', 'test2')}>
+                Login test2
+              </Button>
+              <Button variant='warning' onClick={() => loginTestUser('test3', 'test3')}>
+                Login test3
+              </Button>
+              <Button variant='info' onClick={() => loginTestUser('test4', 'test4')}>
+                Login test4
+              </Button>
+            </ButtonGroup>
+        </Col>
+      </Row>
       <h1>Log In</h1>
       <Row>
         <Col>

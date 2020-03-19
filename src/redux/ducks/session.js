@@ -4,6 +4,8 @@ export const START_GAME_PENDING = 'skeleton-card/redux/ducks/session/START_GAME_
 export const START_GAME_SUCCESS = 'skeleton-card/redux/ducks/session/START_GAME_SUCCESS'
 export const START_GAME_FAIL = 'skeleton-card/redux/ducks/session/START_GAME_FAIL'
 
+export const DISPATCH_REDISTRIBUTE_ROLES_TO_SOCKET = 'server/DISPATCH_REDISTRIBUTE_ROLES_TO_SOCKET'
+export const DISPATCH_RETURN_TO_LOBBY_TO_SOCKET = 'server/DISPATCH_RETURN_TO_LOBBY_TO_SOCKET'
 export const DISPATCH_GAME_TO_SOCKET = 'server/DISPATCH_GAME_TO_SOCKET'
 export const DISPATCH_GAME_TO_CLIENTS = 'skeleton-card/redux/ducks/session/DISPATCH_GAME_TO_CLIENTS'
 export const DISPATCH_START_GAME_TO_SOCKET = 'server/DISPATCH_START_GAME_TO_SOCKET'
@@ -18,6 +20,9 @@ export const SET_CLIENTS_IN_ROOM = 'skeleton-card/redux/ducks/session/SET_CLIENT
 export const SET_ROOM_FOR_SESSION = 'skeleton-card/redux/ducks/session/SET_ROOM_FOR_SESSION'
 export const CLEAR_ROOM_FOR_SESSION = 'skeleton-card/redux/ducks/session/CLEAR_ROOM_FOR_SESSION'
 export const SET_GAME_ROLES = 'skeleton-card/redux/ducks/session/SET_GAME_ROLES'
+export const CLEAR_CURRENT_GAME = 'skeleton-card/redux/ducks/session/CLEAR_CURRENT_GAME'
+export const RETURN_TO_LOBBY = 'skeleton-card/redux/ducks/session/RETURN_TO_LOBBY'
+export const REDISTRIBUTE_ROLES = 'skeleton-card/redux/ducks/session/REDISTRIBUTE_ROLES'
 
 export default function reducer(state = { messages: [], clients: [], host: false, selectedGame: null }, action) {
   switch (action.type) {

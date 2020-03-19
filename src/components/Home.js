@@ -50,6 +50,11 @@ const Home = (props) => {
     history.push('/lobby')
   }
 
+  const createTestRoom = (name) => {
+    props.setRoomName(name)
+    history.push('/lobby')
+  }
+
   if (props.login.user && props.login.user.token) {
     if(props.room){
       return (
@@ -60,6 +65,13 @@ const Home = (props) => {
       return (
         <>
         <Jumbotron>
+          <Row>
+            <Col>
+              <Button className='mt-2' variant='warning' onClick={() => createTestRoom('test')}>
+                  Join Test Room
+              </Button>
+            </Col>
+          </Row>
           <Row>
             <Col>
             <h1>Welcome, {props.login.user.username}</h1>
@@ -73,7 +85,7 @@ const Home = (props) => {
                   <Form.Text>
                     Create a room by using a new name, or join an existing room by typing in a matching name
                   </Form.Text>
-                  <Form.Control value={lobbyName} onChange={event => handleRoomNameChange(event)} type="email" placeholder="Enter email" />
+                  <Form.Control value={lobbyName} onChange={event => handleRoomNameChange(event)} type="email" placeholder="enter room name" />
                 </Form.Group>
                 <Button onClick={() => handleCreateRoom()} variant="primary" type="submit">
                   Create/Join Room
