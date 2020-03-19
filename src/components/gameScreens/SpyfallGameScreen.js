@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { MDBBtn, MDBInput, MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownItem, MDBDropdownMenu } from 'mdbreact'
 import { Button, Row, Col, Form, ListGroup, Container } from 'react-bootstrap'
 import { setRoomName } from '../../redux/ducks/socket'
-import { setGame, dispatchRoomMessage, startGame } from '../../redux/ducks/session'
+import { setGame, dispatchRoomMessage, startGame, returnToLobby } from '../../redux/ducks/session'
 import uuid from 'uuid'
 
 const SpyfallGameScreen = (props) => {
@@ -21,7 +21,6 @@ const SpyfallGameScreen = (props) => {
       setIsSpy(getClientRole(props.login.user.id, props.session.clients).isSpy)
       setActiveLocation(getClientRole(props.login.user.id, props.session.clients).location)
     }
-
   }, [])
 
   const handleMessageChange = event => {
@@ -33,26 +32,32 @@ const SpyfallGameScreen = (props) => {
     setMessage('')
   }
 
-  const returnToLobby = () => {
-
-    return(
-      <Redirect to='/lobby'/>
-    )
-  }
-
   const handleChangeGameClick = (event) => {
     setSelectedGame(event.target.value)
     const gameToSet = props.games.games.filter(game => game.gameName === event.target.value)[0]
     props.setGame(gameToSet, props.socket.room)
   }
 
-  const getClientRole = (userId, clients) => clients.filter(client => client.userId === userId )[0]
+  const handleReturnToLobby = (roomName) => {
+    console.log(roomName)
+    props.returnToLobby(props.session.room)
+  }
 
-  if (props.login.user && props.login.user.token) {
+  const getClientRole = (userId, clients) => clients.filter(client => client.userId === userId )[0]
+  if (props.session.returnToLobby) {
+    return <Redirect to='/lobby' />
+  } else if (props.login.user && props.login.user.token) {
     if(props.room) {
       if(isSpy) {
         return (
           <Container>
+          <Row>
+            <Col>
+              <Button onClick={() => handleReturnToLobby()}>
+                Return To Lobby
+              </Button>
+            </Col>
+          </Row>
           <Row>
             <Col>
               <h1>You are the SPY</h1>
@@ -119,18 +124,25 @@ const SpyfallGameScreen = (props) => {
         <Container>
           <Row>
             <Col>
+              <Button onClick={() => handleReturnToLobby()}>
+                Return To Lobby
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               <h1>You are not the Spy</h1>
             </Col>
           </Row>
           <Row>
-            <Col className='mt-2'>
+            <Col >
               <Button onClick={() => toggleViewLocation(!viewLocation)}>
                 {viewLocation ? activeLocation : 'view location'}
               </Button>
             </Col>
           </Row>
           <Row>
-            <Col className='mt-2'>
+            <Col>
               <ListGroup as='ul'>
                 {props.session.selectedGame.locations.map(location => <ListGroup.Item as='li'>{location}</ListGroup.Item>
                 )}
@@ -211,7 +223,8 @@ const mapDispatchToProps = {
   setRoomName,
   dispatchRoomMessage,
   setGame,
-  startGame
+  startGame,
+  returnToLobby
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpyfallGameScreen)
