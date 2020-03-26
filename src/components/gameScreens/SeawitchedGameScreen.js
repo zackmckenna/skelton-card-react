@@ -7,6 +7,7 @@ import { Button, Row, Col, Form, Container } from 'react-bootstrap'
 import { setRoomName } from '../../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../../redux/ducks/session'
 import uuid from 'uuid'
+import ResetCurrentGameButton from '../buttons/ResetCurrentGameButton'
 
 const SeawitchedGameScreen = (props) => {
   const [message, setMessage] = useState('')
@@ -43,6 +44,9 @@ const SeawitchedGameScreen = (props) => {
           <Row>
             <Col>
               <ReturnToLobbyButton />
+            </Col>
+            <Col>
+              <ResetCurrentGameButton />
             </Col>
           </Row>
           <Row>

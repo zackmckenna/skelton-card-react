@@ -6,6 +6,8 @@ import { Button, Row, Col, Form } from 'react-bootstrap'
 import { setRoomName } from '../../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../../redux/ducks/session'
 import uuid from 'uuid'
+import ReturnToLobbyButton from '../buttons/ReturnToLobbyButton'
+import ResetCurrentGameButton from '../buttons/ResetCurrentGameButton'
 
 const TraitorGameScreen = (props) => {
   const [message, setMessage] = useState('')
@@ -38,6 +40,14 @@ const TraitorGameScreen = (props) => {
         <>
           <Row>
             <Col>
+              <ReturnToLobbyButton />
+            </Col>
+            <Col>
+              <ResetCurrentGameButton />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               <h1>Traitor Role: {getClientRole(props.login.user.id, props.session.clients) ? getClientRole(props.login.user.id, props.session.clients).role : null }</h1>
             </Col>
           </Row>
@@ -52,20 +62,20 @@ const TraitorGameScreen = (props) => {
             </Col>
           </Row>
           <Row>
-              <Col>
-                <Form onChange={event => handleMessageChange(event)}>
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>type a message</Form.Label>
-                    <Form.Control value={message} type="text" placeholder="type a message" />
-                    <Form.Text className="text-muted">
-                      send a message to the room
-                    </Form.Text>
-                  </Form.Group>
-                </Form>
-                <Button onClick={() => handleSendMessage()}>
-                  Send Message To Room
-                </Button>
-              </Col>
+            <Col>
+              <Form onChange={event => handleMessageChange(event)}>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>type a message</Form.Label>
+                  <Form.Control value={message} type="text" placeholder="type a message" />
+                  <Form.Text className="text-muted">
+                    send a message to the room
+                  </Form.Text>
+                </Form.Group>
+              </Form>
+              <Button onClick={() => handleSendMessage()}>
+                Send Message To Room
+              </Button>
+            </Col>
             </Row>
             <Row>
               <Col>
