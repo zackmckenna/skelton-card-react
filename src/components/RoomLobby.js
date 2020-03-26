@@ -6,7 +6,7 @@ import GameSelect from './GameSelect'
 import SpinLoader from './utility/SpinLoader'
 import { Form, Button, Row, Col, Container } from 'react-bootstrap'
 import { setRoomName } from '../redux/ducks/socket'
-import { setGame, dispatchRoomMessage, startGame } from '../redux/ducks/session'
+import { setGame, dispatchRoomMessage, startGame, returnedToLobby } from '../redux/ducks/session'
 import uuid from 'uuid'
 
 const RoomLobby = (props) => {
@@ -16,6 +16,7 @@ const RoomLobby = (props) => {
 
   useEffect(() => {
     console.log('loading lobby')
+    props.returnedToLobby()
   }, [])
 
   const handleMessageChange = event => {
@@ -160,7 +161,8 @@ const mapDispatchToProps = {
   setRoomName,
   dispatchRoomMessage,
   setGame,
-  startGame
+  startGame,
+  returnedToLobby
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomLobby)

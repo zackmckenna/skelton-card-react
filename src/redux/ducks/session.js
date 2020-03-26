@@ -22,10 +22,15 @@ export const CLEAR_ROOM_FOR_SESSION = 'skeleton-card/redux/ducks/session/CLEAR_R
 export const SET_GAME_ROLES = 'skeleton-card/redux/ducks/session/SET_GAME_ROLES'
 export const CLEAR_CURRENT_GAME = 'skeleton-card/redux/ducks/session/CLEAR_CURRENT_GAME'
 export const RETURN_TO_LOBBY = 'skeleton-card/redux/ducks/session/RETURN_TO_LOBBY'
+export const RETURNED_TO_LOBBY = 'skeleton-card/redux/ducks/session/RETURNED_TO_LOBBY'
 export const REDISTRIBUTE_ROLES = 'skeleton-card/redux/ducks/session/REDISTRIBUTE_ROLES'
 
 export default function reducer(state = { messages: [], clients: [], host: false, selectedGame: null }, action) {
   switch (action.type) {
+  case RETURNED_TO_LOBBY:
+    return { ...state, returnToLobby: false }
+  case RETURN_TO_LOBBY:
+    return { ...state, selectedGame: 'no game selected', roleDistributed: false, returnToLobby: true}
   case CLEAR_ROOM_FOR_SESSION:
     return { ...state, room: null }
   case SET_ROOM_FOR_SESSION:
@@ -57,6 +62,23 @@ export default function reducer(state = { messages: [], clients: [], host: false
   default:
     return state
   }
+}
+
+export const dispatchReturnToLobbyToSocket = roomName => {
+  return {
+    type: DISPATCH_RETURN_TO_LOBBY_TO_SOCKET,
+    payload: roomName
+  }
+}
+
+export const returnedToLobby = () => dispatch => {
+  dispatch({
+    type: RETURNED_TO_LOBBY
+  })
+}
+
+export const returnToLobby = (roomName) => dispatch => {
+  dispatch(dispatchReturnToLobbyToSocket(roomName))
 }
 
 export const setGameRoles = roles => {

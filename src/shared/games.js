@@ -225,9 +225,25 @@ export const games = [
     minPlayers: 3,
     maxPlayers: 12,
     locations: [
-      'cemetary',
-      'racetrack',
-      'farm'
+      'Cemetary',
+      'Racetrack',
+      'Retirement Home',
+      'Vineyard',
+      'Construction Site',
+      'Wedding',
+      'Cat Show',
+      'Harbor Docks',
+      'Coal Mine',
+      'Library',
+      'Rock Concert',
+      'Stadium',
+      'Subway',
+      'Sightseeing Bus',
+      'Gas Station',
+      'Jail',
+      'Wedding',
+      'Jazz Club',
+      'The U.N'
     ],
   }
 ]
