@@ -48,7 +48,7 @@ const SpyfallGameScreen = (props) => {
     return <Redirect to='/lobby' />
   } else if (props.login.user && props.login.user.token) {
     if(props.room) {
-      if(isSpy) {
+      if(getClientRole(props.login.user.id, props.session.clients).isSpy) {
         return (
           <Container>
             <Row>
@@ -123,7 +123,7 @@ const SpyfallGameScreen = (props) => {
             </Row>
           </Container>
         )
-      } else if (!isSpy)
+      } else if (!getClientRole(props.login.user.id, props.session.clients).isSpy)
         return (
           <Container>
             <Row>

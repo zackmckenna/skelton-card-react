@@ -6,6 +6,7 @@ import { Button, Row, Col, Form } from 'react-bootstrap'
 import { setRoomName } from '../../redux/ducks/socket'
 import { setGame, dispatchRoomMessage, startGame } from '../../redux/ducks/session'
 import uuid from 'uuid'
+import { Redirect } from 'react-router-dom'
 import ReturnToLobbyButton from '../buttons/ReturnToLobbyButton'
 import ResetCurrentGameButton from '../buttons/ResetCurrentGameButton'
 
@@ -34,7 +35,9 @@ const TraitorGameScreen = (props) => {
 
   const getClientRole = (userId, clients) => clients.filter(client => client.userId === userId )[0]
 
-  if (props.login.user && props.login.user.token) {
+  if (props.session.returnToLobby) {
+    return <Redirect to='/lobby' />
+  } else if (props.login.user && props.login.user.token) {
     if(props.room) {
       return (
         <>
@@ -114,7 +117,7 @@ const TraitorGameScreen = (props) => {
     )
   } else {
     return (
-      <h1>No game data</h1>
+      <Redirect to='/' />
     )
   }
 }

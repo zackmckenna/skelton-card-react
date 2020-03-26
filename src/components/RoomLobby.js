@@ -128,9 +128,7 @@ const RoomLobby = (props) => {
       )
     } else if (!props.room){
       return (
-        <>
-          <h1>ERROR CREATING ROOM</h1>
-        </>
+          <Redirect to='/'/>
       )
     }
   } else if (props.login.loading) {

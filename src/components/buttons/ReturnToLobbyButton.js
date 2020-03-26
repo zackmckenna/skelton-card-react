@@ -6,10 +6,10 @@ import { returnToLobby } from '../../redux/ducks/session'
 
 const ReturnToLobbyButton = (props) => {
 
-  const handleReturnToLobby = (roomName) => {
+  const handleReturnToLobby = () => {
     props.returnToLobby(props.session.room)
     return (
-      <Redirect to='/lobby' />
+      <Redirect to='/lobby'/>
     )
   }
 
